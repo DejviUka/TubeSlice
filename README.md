@@ -1,141 +1,146 @@
 # YouTube Downloader & Cutter
 
-This project provides a command-line tool to download and cut YouTube videos. It uses **yt-dlp** to download videos (or extract audio) and **FFmpeg** to cut the media file. The tool supports specifying start and end times (or clip length) for cutting the downloaded media. This repository also includes a starter batch file to create a Python virtual environment and install required dependencies.
+This project provides a command-line tool to download and cut YouTube videos using **yt-dlp** and **FFmpeg**. It allows you to specify start and end times (or clip length) to extract specific segments from the downloaded media.
+
+---
+
+## Quick Usage
+
+Run the tool with:
+
+```bash
+python ytDL.py "<YouTube URL>" [options]
+```
+
+**Examples:**
+
+- **Download audio only (from 1:00 to 2:00):**
+  ```bash
+  python ytDL.py "https://www.youtube.com/watch?v=dQw4w9WgXcQ" -a -s 01.00 -e 02.00 -n audio_clip.mp3
+  ```
+- **Download video + audio (from 1:00 to 2:00):**
+  ```bash
+  python ytDL.py "https://www.youtube.com/watch?v=dQw4w9WgXcQ" -s 01.00 -e 02.00 -n video_clip.mp4
+  ```
 
 ---
 
 ## Files Overview
 
 - **ytDL.py**  
-  The main Python script that:
-  - Downloads YouTube videos using [yt-dlp](https://github.com/yt-dlp/yt-dlp).
+  The main script that:
+  - Downloads YouTube videos via [yt-dlp](https://github.com/yt-dlp/yt-dlp).
   - Supports three download modes:
-    - **Audio only:** Extracts and saves the audio as an MP3 file.
+    - **Audio only:** Extracts and saves audio as an MP3 file.
     - **Video only:** Downloads video without audio.
     - **Video + Audio:** Downloads and merges the best video and audio streams into an MP4.
-  - Cuts a segment of the downloaded file based on specified start (`-s`), end (`-e`), or length (`-l`) arguments.
-  - Uses **FFmpeg** (via subprocess calls) for precise media cutting.
+  - Cuts the media file using **FFmpeg** based on start (`-s`), end (`-e`), or clip length (`-l`) parameters.
 
 - **starter.bat**  
   A Windows batch script that:
-  - Checks for an existing Python virtual environment (`venv`) and creates it if missing.
+  - Checks for and creates a Python virtual environment (`venv`) if it doesn’t exist.
   - Activates the virtual environment.
-  - Upgrades pip and installs all required dependencies from `requirements.txt`.
-  - Keeps the command prompt open with the virtual environment active.
+  - Upgrades pip and installs dependencies from `requirements.txt`.
 
 - **requirements.txt**  
-  Contains the Python package dependencies:
-yt-dlp moviepy
-
-yaml
-Copy
-Edit
-These packages are used by `ytDL.py` for downloading videos and processing media files.
+  Contains the necessary Python package dependencies:
+  ```plaintext
+  yt-dlp
+  moviepy
+  ```
 
 ---
 
 ## Prerequisites
 
-- **Python 3.6+** (recommended Python 3.8+)
+- **Python 3.6+** (Python 3.8+ recommended)
 - **FFmpeg** installed and added to your system's PATH  
-Download FFmpeg from [ffmpeg.org](https://ffmpeg.org/) if it is not already installed.
+  Download FFmpeg from [ffmpeg.org](https://ffmpeg.org/) if needed.
 
 ---
 
 ## Setup & Installation
 
-1. **Clone the Repository:**
+### Clone the Repository
 
- ```bash
- git clone [https://github.com/yourusername/your-repository.git](https://github.com/DejviUka/TubeSlice/)
- cd TubeSlice
+```bash
+git clone https://github.com/DejviUka/TubeSlice.git
+cd TubeSlice
+```
 
-Run the Starter Batch File (Windows):
+### Using the Starter Batch File (Windows)
 
-Double-click starter.bat or run it from a command prompt to:
+Double-click `starter.bat` or run it from the command prompt:
 
-Create and activate a Python virtual environment.
+```bat
+call starter.bat
+```
 
-Upgrade pip.
+This will:
+- Create and activate a Python virtual environment.
+- Upgrade pip.
+- Install required dependencies.
 
-Install required Python packages from requirements.txt.
+### Manual Setup (Alternative)
 
-,,,
-
-**Alternatively, you can manually create the virtual environment and install dependencies:**
-
-bat
-Copy
-Edit
+```bash
 python -m venv venv
 call venv\Scripts\activate
 pip install --upgrade pip
 pip install -r requirements.txt
-Usage
-With the virtual environment activated, you can run the script using Python.
+```
 
-Command-Line Options
-bash
-Copy
-Edit
+---
+
+## Command-Line Options
+
+```bash
 python ytDL.py <YouTube URL> [options]
-Positional Argument:
+```
 
-<YouTube URL>: URL of the YouTube video.
+### Positional Argument
+- `<YouTube URL>`: The URL of the YouTube video.
 
-Optional Flags:
+### Optional Flags
+- `-a`: Download audio only (extract audio as MP3).
+- `-v`: Download video only (no audio).
+- `-s mm.ss`: Set the start time for cutting (e.g., `01.30` for 1 minute 30 seconds).
+- `-e mm.ss`: Set the end time for cutting.
+- `-l mm.ss`: Set the length of the clip (must be used with `-s` or `-e`).
+- `-n output_filename`: Specify the output file name (default is `out.mp4`).
 
--a: Download audio only (extracts audio as MP3).
+**Note:** Do not use `-a` and `-v` simultaneously.
 
--v: Download video only (no audio).
+---
 
--s mm.ss: Set the start time for cutting (in mm.ss format, e.g., 01.30 for 1 minute 30 seconds).
+## Additional Notes
 
--e mm.ss: Set the end time for cutting.
+### FFmpeg Requirement
+This script uses **FFmpeg** to cut the media file. Ensure FFmpeg is installed and available in your system's PATH.
 
--l mm.ss: Set the length of the clip; must be used with either -s or -e (cannot be used when both are provided).
+### Virtual Environment
+The `starter.bat` script simplifies setting up a virtual environment on Windows. For other platforms, use your standard method for creating and activating a Python virtual environment.
 
--n output_filename: Specify the output file name (default is out.mp4).
+### Error Handling
+The script provides error messages for issues such as download failures, invalid time parameters, or file processing errors. Check the console output for troubleshooting.
 
-Note: You cannot use both -a (audio only) and -v (video only) simultaneously.
-
-Examples
-Audio Only Clip (from 1:00 to 2:00):
-
-bash
-Copy
-Edit
-python ytDL.py "https://www.youtube.com/watch?v=dQw4w9WgXcQ" -a -s 01.00 -e 02.00 -n audio_clip.mp4
-Video + Audio Clip (from 1:00 to 2:00):
-
-bash
-Copy
-Edit
-python ytDL.py "https://www.youtube.com/watch?v=dQw4w9WgXcQ" -s 01.00 -e 02.00 -n video_clip.mp4
-Additional Notes
-FFmpeg Requirement:
-This script uses FFmpeg for cutting the downloaded media. Ensure that FFmpeg is installed and accessible via your system's PATH.
-
-Virtual Environment:
-The provided starter.bat simplifies setting up the virtual environment on Windows. For other platforms, follow your platform’s standard procedures for creating and activating Python virtual environments.
-
-Error Handling:
-The script provides error messages for issues such as download failures, invalid time parameters, or file processing errors. Please review the console output for troubleshooting.
-
-Updating Dependencies:
+### Updating Dependencies
 To update dependencies, activate your virtual environment and run:
 
-bash
-Copy
-Edit
+```bash
 pip install --upgrade yt-dlp moviepy
-License
-This project is licensed under the MIT License. See the LICENSE file for details.
+```
 
-Contact
-For questions or suggestions, please open an issue in the repository or contact your.email@example.com.
+---
 
-Happy Downloading & Editing!
+## License
 
-Copy
-Edit
+This project is licensed under the APACHE2 License. See the `LICENSE` file for details.
+
+---
+
+## Contact
+
+For questions or suggestions, please open an issue in the repository or contact `dejvendetta@hotmail.com`.
+
+**Happy Downloading & Editing!**
