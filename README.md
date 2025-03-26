@@ -47,8 +47,9 @@ Download FFmpeg from [ffmpeg.org](https://ffmpeg.org/) if it is not already inst
 1. **Clone the Repository:**
 
  ```bash
- git clone https://github.com/yourusername/your-repository.git
- cd your-repository
+ git clone [https://github.com/yourusername/your-repository.git](https://github.com/DejviUka/TubeSlice/)
+ cd TubeSlice
+
 Run the Starter Batch File (Windows):
 
 Double-click starter.bat or run it from a command prompt to:
@@ -59,7 +60,9 @@ Upgrade pip.
 
 Install required Python packages from requirements.txt.
 
-Alternatively, you can manually create the virtual environment and install dependencies:
+,,,
+
+**Alternatively, you can manually create the virtual environment and install dependencies:**
 
 bat
 Copy
